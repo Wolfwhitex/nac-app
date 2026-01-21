@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nac Gallery</title>
+  <link rel="icon" href="image/nac.png" type="image/icon type">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css?family=Nunito|Libre+Franklin:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  
+    <style>
+      :root {
+        --bg: #ffffff;
+        --bg-footer: #ffffff;
+        --text: #111111;
+        --nav-bg: #ffffff;
+        --border: #ddd;
+        --link: #111111;
+      }
+
+      body.dark {
+        --bg: #1E1E1E;
+        --bg-footer: #1E1E1E;
+        --text: #ffffff;
+        --nav-bg: #1E1E1E;
+        --border: #333;
+        --link: #ffffff;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: var(--bg); /* Matching the background from your image */
+        color: var(--text);
+        transition: background-color 0.4s ease, color 0.4s ease;
+      }
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        background-color: var(--nav-bg);
+        border-bottom: 1px solid var(--border);
+        transition: background-color 0.4s ease;
+      }
+      .container {
+        justify-content: center;
+        margin: 10%;
+        text-align: left;
+      }
+      .container-text {
+        width: 160px;
+        color: #FFF;
+      }
+      h1 {
+        color: var(--text);
+        font-family: Roboto;
+        font-size: 95px;
+        font-style: normal;
+        font-weight: 800;
+        line-height: 117.076%; /* 112.393px */
+        text-align: left;
+        margin: 0;
+      }
+      .logo {
+        font-size: 16px;
+        font-family: Liu Jian Mao Cao;
+        font-style: regular;
+        color: #FFF;
+      }
+      a {
+        font-size: 20px;
+        font-family: Libre Franklin;
+        font-style: regular;
+        color: #FFF;
+      }
+      .nav-links {
+        display: flex;
+        gap: 20px;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--link);
+        font-size: 1em;
+        font-family: Libre Franklin;
+        transition: color 0.3s;
+      }
+      .nav-links a:hover {
+        color: #aaa;
+      }
+      .search-icon {
+        color: white;
+        font-size: 1.2em;
+        cursor: pointer;
+      }
+      .parent {
+        position: relative;
+        align-items: center;
+        top: 0;
+        left: 0;
+      }
+
+      .image-stack-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 550px;
+        position: relative;
+        padding: 20px;
+      }
+
+      .stack-wrapper {
+        position: relative;
+        width: 400px;
+        height: 500px;
+      }
+
+      .stack-image {
+        position: absolute;
+        width: 400px;
+        height: 500px;
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.5s ease;
+      }
+
+      .stack-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .stack-image.left {
+        left: -150px;
+        z-index: 1;
+        transform: rotate(-5deg);
+        opacity: 0.7;
+      }
+
+      .stack-image.center {
+        left: 0;
+        z-index: 3;
+      }
+
+      .stack-image.right {
+        left: 150px;
+        z-index: 1;
+        transform: rotate(5deg);
+        opacity: 0.7;
+      }
+
+      .auto-carousel {
+        width: 100%;
+        margin-top: 60px;
+        padding: 20px 0;
+      }
+
+      .carousel-wrapper {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .carousel-track {
+        display: flex;
+        transition: transform 1s ease-in-out;
+      }
+
+      .carousel-slide {
+        min-width: 100%;
+        aspect-ratio: 16 / 9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #1E1E1E;
+        position: relative;
+      }
+
+      .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .carousel-text {
+        position: absolute;
+        left: 40px;
+        top: 70%;
+        transform: translateY(-50%);
+        color: white;
+        font-family: Roboto;
+        font-size: 64px;
+        font-weight: 800;
+        text-align: left;
+        z-index: 10;
+      }
+
+      .carousel-text-frame {
+        position: absolute;
+        left: 40px;
+        top: 70%;
+        transform: translateY(-50%);
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+
+      .carousel-text-main {
+        color: white;
+        font-family: Roboto;
+        font-size: 64px;
+        font-weight: 800;
+        text-align: center;
+        margin: 0;
+      }
+
+      .carousel-credit {
+        color: white;
+        font-family: Roboto;
+        font-size: 40px;
+        font-weight: 300;
+        text-align: left;
+        margin: 0;
+      }
+
+      .photo-grid-container {
+        margin: 80px auto;
+        padding: 0 10%;
+        column-count: 2;
+        column-gap: 1.4em;
+      }
+
+      .photo-grid-container img {
+        width: 100%;
+        display: block;
+        margin-bottom: 1.4em;
+        break-inside: avoid;
+        transition: transform 0.4s ease;
+      }
+
+      .photo-grid-container img:hover {
+        transform: scale(1.03);
+      }
+
+      .theme-toggle {
+        background: none;
+        border: none;
+        font-size: 1.3em;
+        cursor: pointer;
+        color: var(--text);
+        transition: transform 0.3s ease, color 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+        transform: scale(1.15);
+      }
+
+      .footer {
+        background: linear-gradient(180deg, #fafafa, #ffffff);
+        color: #111;
+        padding: 80px 80px 60px;
+        transition: background 0.4s ease, color 0.4s ease;
+      }
+
+      body.dark .footer {
+        background: linear-gradient(
+          135deg,
+          #0b0b0b 0%,
+          #141414 40%,
+          #1e1e1e 100%
+        );
+        color: #ffffff;
+      }
+
+      .footer-inner {
+        max-width: 1200px;
+        margin: auto;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        flex-direction: column;
+        gap: 40px;
+      }
+
+      footer a,
+      footer span,
+      footer p {
+        color: inherit;
+      }
+
+      .footer-brand {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .footer-logo {
+        font-family: 'Liu Jian Mao Cao', cursive;
+        font-size: 56px;
+        color: var(--text);
+      }
+
+      .footer-separator {
+        width: 1px;
+        height: 56px;
+        background-color: var(--text);
+        opacity: 0.6;
+      }
+
+      .footer-text {
+        font-family: 'Libre Franklin', sans-serif;
+        font-size: 24px;
+        letter-spacing: 0.5px;
+      }
+
+      .footer-social {
+        display: flex;
+        gap: 28px;
+      }
+
+      .footer-social a {
+        width: 44px;
+        height: 44px;
+        border: 1px solid var(--text);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      .footer-social a:hover {
+        background-color: var(--text);
+      }
+
+      .footer-social img {
+        width: 20px;
+        height: 20px;
+        filter: invert(1);
+      }
+
+      .footer-social a:hover img {
+        filter: invert(0);
+      }
+
+      .footer-copy {
+        font-family: 'Libre Franklin', sans-serif;
+        font-size: 14px;
+        opacity: 0.7;
+      }
+
+      .footer-logo-img {
+        height: 46px;
+        width: auto;
+        display: block;
+      }
+
+      /* Mobile Responsive Styles */
+      @media (max-width: 768px) {
+        nav {
+          padding: 15px !important;
+        }
+
+        nav img {
+          width: 20px !important;
+          height: 12px !important;
+        }
+
+        .nav-links {
+          gap: 10px;
+        }
+
+        .nav-links a {
+          font-size: 0.9em;
+        }
+
+        .search-icon {
+          font-size: 1em;
+        }
+
+        .container {
+          margin: 5% !important;
+        }
+
+        h1 {
+          font-size: 48px !important;
+          line-height: 1.2;
+        }
+
+        .container p {
+          font-size: 14px;
+        }
+
+        .image-stack-container {
+          height: auto !important;
+          padding: 10px;
+        }
+
+        .stack-wrapper {
+          width: 280px !important;
+          height: 350px !important;
+        }
+
+        .stack-image {
+          width: 280px !important;
+          height: 350px !important;
+        }
+
+        .stack-image.left {
+          left: -100px !important;
+        }
+
+        .stack-image.right {
+          left: 100px !important;
+        }
+
+        .auto-carousel {
+          margin-top: 30px;
+          padding: 10px 0;
+        }
+
+        .carousel-text-main {
+          font-size: 32px !important;
+        }
+
+        .carousel-credit {
+          font-size: 20px !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        nav {
+          padding: 10px !important;
+        }
+
+        nav img {
+          width: 18px !important;
+          height: 10px !important;
+        }
+
+        .nav-links a {
+          font-size: 0.8em;
+        }
+
+        .container {
+          margin: 3% !important;
+        }
+
+        h1 {
+          font-size: 32px !important;
+          line-height: 1.1;
+        }
+
+        .container p {
+          font-size: 12px;
+        }
+
+        .image-stack-container {
+          height: auto !important;
+          padding: 5px;
+        }
+
+        .stack-wrapper {
+          width: 200px !important;
+          height: 280px !important;
+        }
+
+        .stack-image {
+          width: 200px !important;
+          height: 280px !important;
+        }
+
+        .stack-image.left {
+          left: -70px !important;
+          transform: rotate(-3deg) !important;
+        }
+
+        .stack-image.right {
+          left: 70px !important;
+          transform: rotate(3deg) !important;
+        }
+
+        .auto-carousel {
+          margin-top: 20px;
+          padding: 5px 0;
+        }
+
+        .carousel-text {
+          font-size: 24px;
+          left: 15px;
+          top: 50%;
+        }
+
+        .carousel-text-main {
+          font-size: 24px !important;
+        }
+
+        .carousel-credit {
+          font-size: 16px !important;
+        }
+      }
+    /* Tablet */
+    @media (min-width: 768px) {
+      .photo-grid-container {
+        column-count: 3;
+      }
+    }
+
+    /* Desktop */
+    @media (min-width: 1024px) {
+      .photo-grid-container {
+        column-count: 4;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .footer {
+        height: auto;
+        padding: 80px 20px;
+      }
+
+      .footer-logo {
+        font-size: 42px;
+      }
+
+      .footer-text {
+        font-size: 18px;
+      }
+    }
+    </style>
+  </head>
+  <body>
+  
+  <nav>
+    <img id="navbarLogo" src="image/Wlogo.png" width="26.5" height="15">
+    <div class="nav-links">
+      <a>gallery present</a>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      🌙
+    </button>
+  </nav>
+
+  <div class="container">
+    <h1>Have no fear of perfection,<br>you'll never reach it.</h1>
+    <p>— Salvador Dalí</p>
+  </div>
+
+  <div class="image-stack-container" id="imageStack">
+    <div class="stack-wrapper">
+      <div class="stack-image left" data-index="0">
+        <img src="image/img1.jpg" />
+      </div>
+      <div class="stack-image center" data-index="1">
+        <img src="image/img2.jpg" />
+      </div>
+      <div class="stack-image right" data-index="2">
+        <img src="image/img3.jpg" />
+      </div>
+    </div>
+  </div>
+
+  <div class="auto-carousel">
+    <div class="carousel-wrapper" id="carousel">
+      <div class="carousel-text-frame">
+        <div class="carousel-text-main">Shot on Sony Alpha 7 ii</div>
+        <div class="carousel-credit">by Nazhira D.</div>
+      </div>
+      <div class="carousel-track" id="carouselTrack">
+        <div class="carousel-slide">
+          <img src="image/img4.jpg" />
+        </div>
+        <div class="carousel-slide">
+          <img src="image/img5.jpg" />
+        </div>
+        <div class="carousel-slide">
+          <img src="image/img6.jpg" />
+        </div>
+        <div class="carousel-slide">
+          <img src="image/img4.jpg" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="photo-grid-container">
+    <img src="image/kolase/kolase (1).jpeg">
+    <img src="image/kolase/kolase (1).jpg">
+    <img src="image/kolase/kolase (2).jpeg">
+    <img src="image/kolase/kolase (2).jpg">
+    <img src="image/kolase/kolase (3).jpeg">
+    <img src="image/kolase/kolase (3).jpg">
+    <img src="image/kolase/kolase (4).jpg">
+    <img src="image/kolase/kolase (5).jpg">
+    <img src="image/kolase/kolase (6).jpg">
+    <img src="image/kolase/kolase (7).jpg">
+    <img src="image/kolase/kolase (8).jpg">
+    <img src="image/kolase/kolase (9).jpg">
+    <img src="image/kolase/kolase (10).jpg">
+    <img src="image/kolase/kolase (11).jpg">
+    <img src="image/kolase/kolase (12).jpg">
+    <img src="image/kolase/kolase (13).jpg">
+    <img src="image/kolase/kolase (14).jpg">
+    <img src="image/kolase/kolase (15).jpg">
+    <img src="image/kolase/kolase (16).jpg">
+    <img src="image/kolase/kolase (17).jpg">
+    <img src="image/kolase/kolase (18).jpg">
+    <img src="image/kolase/kolase (19).jpg">
+    <img src="image/kolase/kolase (20).jpg">
+    <img src="image/kolase/kolase (21).jpg">
+    <img src="image/kolase/kolase (22).jpg">
+    <img src="image/kolase/kolase (23).jpg">
+    <img src="image/kolase/kolase (24).jpg">
+    <img src="image/kolase/kolase (25).jpg">
+    <img src="image/kolase/kolase (26).jpg">
+    <img src="image/kolase/kolase (27).jpg">
+    <img src="image/kolase/kolase (28).jpg">
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      <img id="footerLogo" src="image/Wlogo.png" class="footer-logo-img">
+      <span class="footer-separator"></span>
+      <span class="footer-text">gallery</span>
+    </div>
+
+    <div class="footer-social">
+    <a href="https://instagram.com" target="_blank">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+    <a href="https://github.com" target="_blank">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://youtube.com" target="_blank">
+      <i class="fa-brands fa-youtube"></i>
+    </a>
+  </div>
+
+    <div class="footer-copy">
+      © 2026 Nazhira D | All Rights Reserved
+    </div>
+
+  </div>
+</footer>
+
+
+  <script>
+    const body = document.body;
+    const toggleBtn = document.getElementById('themeToggle');
+    const logoNav = document.getElementById('navbarLogo');
+    const logoFooter = document.getElementById('footerLogo');
+
+  function setDarkMode() {
+    body.classList.remove('light');
+    toggleBtn.textContent = '☀️';
+
+    if (logoNav) logoNav.src = "image/Wlogo.png";
+    if (logoFooter) logoFooter.src = "image/Wlogo.png";
+
+    localStorage.setItem('theme', 'dark');
+  }
+
+  function setLightMode() {
+    body.classList.remove('dark');
+    toggleBtn.textContent = '🌙';
+
+    if (logoNav) logoNav.src = "image/nacc.png";
+    if (logoFooter) logoFooter.src = "image/nacc.png";
+
+    localStorage.setItem('theme', 'light');
+  }
+
+
+  // load saved theme
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    setDarkMode();
+  } else {
+    setLightMode();
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    body.classList.contains('dark') ? setLightMode() : setDarkMode();
+  });
+
+
+    // Stacked Image Carousel
+    const imageStack = document.getElementById('imageStack');
+    const stackWrapper = imageStack.querySelector('.stack-wrapper');
+    let startX = 0;
+    let isDragging = false;
+    let images = ['/image/img1.jpg', '/image/img2.jpg', '/image/img3.jpg'];
+    let currentIndex = 0;
+
+    // Handle mouse events
+    stackWrapper.addEventListener('mousedown', (e) => {
+      startX = e.clientX;
+      isDragging = true;
+      stackWrapper.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mouseup', (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      const endX = e.clientX;
+      const diff = endX - startX;
+      
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          swipeRight();
+        } else {
+          swipeLeft();
+        }
+      }
+      startX = 0;
+      stackWrapper.style.cursor = 'grab';
+    });
+
+    // Handle touch events
+    stackWrapper.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+      e.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener('touchend', (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      const endX = e.changedTouches[0].clientX;
+      const diff = endX - startX;
+      
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          swipeRight();
+        } else {
+          swipeLeft();
+        }
+      }
+      startX = 0;
+    }, { passive: false });
+
+    function updateImages() {
+      const imgElements = stackWrapper.querySelectorAll('img');
+      const leftIdx = (currentIndex - 1 + images.length) % images.length;
+      const centerIdx = currentIndex;
+      const rightIdx = (currentIndex + 1) % images.length;
+
+      imgElements[0].src = images[leftIdx];
+      imgElements[1].src = images[centerIdx];
+      imgElements[2].src = images[rightIdx];
+    }
+
+    function swipeLeft() {
+      currentIndex = (currentIndex + 1) % images.length;
+      updateImages();
+    }
+
+    function swipeRight() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      updateImages();
+    }
+
+    // Auto Carousel
+    const carousel = document.getElementById('carousel');
+    const carouselTrack = document.getElementById('carouselTrack');
+    let carouselIndex = 0;
+    let carouselStartX = 0;
+    let carouselIsDragging = false;
+    const totalSlides = 3;
+    let autoSlideInterval;
+
+    function updateCarouselPosition() {
+      carouselTrack.style.transform = `translateX(-${carouselIndex * 100}%)`;
+    }
+
+    function nextSlide() {
+      carouselIndex++;
+      if (carouselIndex > totalSlides) {
+        carouselTrack.style.transition = 'none';
+        carouselIndex = 0;
+        updateCarouselPosition();
+        setTimeout(() => {
+          carouselTrack.style.transition = 'transform 1s ease-in-out';
+        }, 50);
+      } else {
+        updateCarouselPosition();
+      }
+    }
+
+    function prevSlide() {
+      carouselIndex = (carouselIndex + 1) % totalSlides;
+      updateCarouselPosition();
+    }
+
+    function startAutoSlide() {
+      autoSlideInterval = setInterval(nextSlide, 4000);
+    }
+
+    function stopAutoSlide() {
+      clearInterval(autoSlideInterval);
+    }
+
+    // Mouse events for carousel
+    carousel.addEventListener('mousedown', (e) => {
+      stopAutoSlide();
+      carouselStartX = e.clientX;
+      carouselIsDragging = true;
+      carousel.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mouseup', (e) => {
+      if (!carouselIsDragging) return;
+      carouselIsDragging = false;
+      const endX = e.clientX;
+      const diff = endX - carouselStartX;
+      
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          prevSlide();
+        } else {
+          nextSlide();
+        }
+      }
+      carouselStartX = 0;
+      carousel.style.cursor = 'grab';
+      startAutoSlide();
+    });
+
+    // Touch events for carousel
+    carousel.addEventListener('touchstart', (e) => {
+      stopAutoSlide();
+      carouselStartX = e.touches[0].clientX;
+      carouselIsDragging = true;
+      e.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener('touchend', (e) => {
+      if (!carouselIsDragging) return;
+      carouselIsDragging = false;
+      const endX = e.changedTouches[0].clientX;
+      const diff = endX - carouselStartX;
+      
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          prevSlide();
+        } else {
+          nextSlide();
+        }
+      }
+      carouselStartX = 0;
+      startAutoSlide();
+    }, { passive: false });
+
+    // Start auto-sliding
+    startAutoSlide();
+  </script>
+</body>
+</html>
+
