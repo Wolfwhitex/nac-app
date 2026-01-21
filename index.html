@@ -639,14 +639,14 @@
     </div>
 
     <div class="footer-social">
-    <a href="https://instagram.com" target="_blank">
+    <a href="https://www.instagram.com/nazhiradd/" target="_blank">
       <i class="fa-brands fa-instagram"></i>
     </a>
-    <a href="https://github.com" target="_blank">
+    <a href="https://github.com/Wolfwhitex" target="_blank">
       <i class="fa-brands fa-github"></i>
     </a>
-    <a href="https://youtube.com" target="_blank">
-      <i class="fa-brands fa-youtube"></i>
+    <a href="www.linkedin.com/in/nazhira-dewi-aqmarina-b6981426a" target="_blank">
+      <i class="fa-brands fa-linkedin"></i>
     </a>
   </div>
 
@@ -660,16 +660,16 @@
 
   <script>
     const body = document.body;
-    const toggleBtn = document.getElementById('themeToggle');
-    const logoNav = document.getElementById('navbarLogo');
-    const logoFooter = document.getElementById('footerLogo');
+  const toggleBtn = document.getElementById('themeToggle');
+  const logoNav = document.getElementById('navbarLogo');
+  const logoFooter = document.getElementById('footerLogo');
 
   function setDarkMode() {
-    body.classList.remove('light');
+    body.classList.add('dark');
     toggleBtn.textContent = '☀️';
 
-    if (logoNav) logoNav.src = "image/Wlogo.png";
-    if (logoFooter) logoFooter.src = "image/Wlogo.png";
+    logoNav.src = "image/Wlogo.png";
+    logoFooter.src = "image/Wlogo.png";
 
     localStorage.setItem('theme', 'dark');
   }
@@ -678,14 +678,12 @@
     body.classList.remove('dark');
     toggleBtn.textContent = '🌙';
 
-    if (logoNav) logoNav.src = "image/nacc.png";
-    if (logoFooter) logoFooter.src = "image/nacc.png";
+    logoNav.src = "image/nacc.png";
+    logoFooter.src = "image/nacc.png";
 
     localStorage.setItem('theme', 'light');
   }
 
-
-  // load saved theme
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme === 'dark') {
     setDarkMode();
