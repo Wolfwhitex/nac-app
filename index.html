@@ -50,7 +50,7 @@
       }
       .container {
         justify-content: center;
-        margin: 10%;
+        margin: 5%;
         text-align: left;
       }
       .container-text {
@@ -129,7 +129,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.5s ease;
+        transition: transform 0.45s ease, opacity 0.45s ease;
       }
 
       .stack-image img {
@@ -141,20 +141,32 @@
       .stack-image.left {
         left: -150px;
         z-index: 1;
-        transform: rotate(-5deg);
+        transform: scale(0.9) rotate(-5deg);
         opacity: 0.7;
       }
 
       .stack-image.center {
         left: 0;
+        transform: scale(1);
+        opacity: 1;
         z-index: 3;
       }
 
       .stack-image.right {
         left: 150px;
         z-index: 1;
-        transform: rotate(5deg);
+        transform: scale(0.9) rotate(5deg);
         opacity: 0.7;
+      }
+
+      .stack-image.swipe-left {
+        transform: translateX(-220px) scale(0.85) rotate(-8deg);
+        opacity: 0;
+      }
+
+      .stack-image.swipe-right {
+        transform: translateX(220px) scale(0.85) rotate(8deg);
+        opacity: 0;
       }
 
       .auto-carousel {
@@ -701,7 +713,7 @@
     const stackWrapper = imageStack.querySelector('.stack-wrapper');
     let startX = 0;
     let isDragging = false;
-    let images = ['/image/img1.jpg', '/image/img2.jpg', '/image/img3.jpg'];
+    let images = ['image/img1.jpg', 'image/img2.jpg', 'image/img3.jpg'];
     let currentIndex = 0;
 
     // Handle mouse events
@@ -762,14 +774,47 @@
       imgElements[2].src = images[rightIdx];
     }
 
+    function animateSwipe(direction) {
+    const center = stackWrapper.querySelector('.center');
+
+    center.classList.add(direction === 'left' ? 'swipe-left' : 'swipe-right');
+
+    setTimeout(() => {
+      center.classList.remove('swipe-left', 'swipe-right');
+      updateStack(direction);
+    }, 300);
+  }
+function updateStack(direction) {
+  const stacks = stackWrapper.querySelectorAll('.stack-image');
+
+  if (direction === 'left') {
+    currentIndex = (currentIndex + 1) % images.length;
+  } else {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+  }
+
+  stacks.forEach(el => el.className = 'stack-image');
+
+  stacks[0].classList.add('left');
+  stacks[1].classList.add('center');
+  stacks[2].classList.add('right');
+
+  stacks[0].querySelector('img').src =
+    images[(currentIndex - 1 + images.length) % images.length];
+  stacks[1].querySelector('img').src =
+    images[currentIndex];
+  stacks[2].querySelector('img').src =
+    images[(currentIndex + 1) % images.length];
+}
+
+  
+
     function swipeLeft() {
-      currentIndex = (currentIndex + 1) % images.length;
-      updateImages();
+      animateSwipe('left');
     }
 
     function swipeRight() {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
-      updateImages();
+      animateSwipe('right');
     }
 
     // Auto Carousel
