@@ -744,7 +744,7 @@
     stackWrapper.addEventListener('touchstart', (e) => {
       startX = e.touches[0].clientX;
       isDragging = true;
-      e.preventDefault();
+      // e.preventDefault();
     }, { passive: false });
 
     document.addEventListener('touchend', (e) => {
@@ -888,7 +888,7 @@ function updateStack(direction) {
       stopAutoSlide();
       carouselStartX = e.touches[0].clientX;
       carouselIsDragging = true;
-      e.preventDefault();
+      // e.preventDefault();
     }, { passive: false });
 
     document.addEventListener('touchend', (e) => {
