@@ -68,6 +68,20 @@
         text-align: left;
         margin: 0;
       }
+      /* Sembunyi di kiri dan transparan */
+      .quote-animate {
+        opacity: 0;
+        transform: translateX(-150px);
+        /* cubic-bezier biar efek masuknya mulus dan estetik */
+        transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        will-change: transform, opacity;
+      }
+      
+      /* Muncul di posisi asli */
+      .quote-animate.show {
+        opacity: 1;
+        transform: translateX(0);
+      }
       .logo {
         font-size: 16px;
         font-family: 'Liu Jian Mao Cao', cursive;
@@ -567,7 +581,7 @@
     </button>
   </nav>
 
-  <div class="container" data-aos="fade-up">
+  <div class="container" quote-animate" id="quoteSection">
     <h1>Have no fear of perfection,<br>you'll never reach it.</h1>
     <p>— Salvador Dalí</p>
   </div>
@@ -912,10 +926,33 @@ function updateStack(direction) {
 
     // Start auto-sliding
     startAutoSlide();
+
+    // Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        // masuk ke layar
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        } 
+        // keluar layar (di-scroll ke bawah atau ke atas)
+        else {
+          entry.target.classList.remove('show'); // efek reverse
+        }
+      });
+    }, {
+      // threshold 0.3 artinya animasi jalan pas 30% dari div-nya mulai kelihatan
+      threshold: 0.3 
+    });
+    
+    // observer mengawasi elemen quote
+    const quoteElement = document.getElementById('quoteSection');
+    if (quoteElement) {
+      observer.observe(quoteElement);
+    }
   </script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-  AOS.init({ duration: 1000, once: true }); // Animasi berjalan sekali saja biar ringan
+  AOS.init({ duration: 1000, once: true }); // Animasi sekali aja biar ringan
 </script>
 </body>
 </html>
