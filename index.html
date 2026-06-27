@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;700&family=Liu+Jian+Mao+Cao&family=Roboto:wght@300;400;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   
@@ -87,10 +88,11 @@
         color: var(--link);
         font-size: 1em;
         font-family: Libre Franklin;
-        transition: color 0.3s;
+        transition: color 0.3s ease, transform 0.3s ease;
       }
       .nav-links a:hover {
         color: #aaa;
+        transform: scale(1.05);
       }
       .search-icon {
         color: white;
@@ -910,6 +912,10 @@ function updateStack(direction) {
     // Start auto-sliding
     startAutoSlide();
   </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 1000, once: true }); // Animasi berjalan sekali saja biar ringan
+</script>
 </body>
 </html>
 
